@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Admin - MCQs</h2>
+
+  <div>
+    <a href="{{ url_for('add_mcq') }}">Add MCQ</a>
+    <a href="{{ url_for('upload_mcqs') }}">Upload JSON</a>
+  </div>
+
+  <form method="get">
+    <label>Filter by subject</label>
+    <select name="subject_id">
+      <option value="all" {% if selected_subject == 'all' %}selected{% endif %}>All subjects</option>
+      {% for subject in subjects %}
+        <option value="{{ subject.id }}" {% if selected_subject|int == subject.id %}selected{% endif %}>{{ subject.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Apply</button>
+  </form>
+
+  <table border="1" cellpadding="6">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Subject</th>
+        <th>Question</th>
+        <th>Options</th>
+        <th>Correct Index</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mcq in mcqs %}
+        <tr>
+          <td>{{ mcq.id }}</td>
+          <td>{{ mcq.subject_name }}</td>
+          <td>{{ mcq.question }}</td>
+          <td>
+            <ol>
+              {% for option in mcq.options %}
+                <li>{{ option }}</li>
+              {% endfor %}
+            </ol>
+          </td>
+          <td>{{ mcq.correct_index }}</td>
+          <td>
+            <a href="{{ url_for('edit_mcq', mcq_id=mcq.id) }}">Edit</a>
+            <form method="post" action="{{ url_for('delete_mcq', mcq_id=mcq.id) }}" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="6">No MCQs found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div>
+    {% if page > 1 %}
+      <a href="{{ url_for('admin_mcqs', page=page-1, subject_id=selected_subject) }}">Previous</a>
+    {% endif %}
+    <span>Page {{ page }}</span>
+    {% if mcqs|length == 100 %}
+      <a href="{{ url_for('admin_mcqs', page=page+1, subject_id=selected_subject) }}">Next</a>
+    {% endif %}
+  </div>
+{% endblock %}

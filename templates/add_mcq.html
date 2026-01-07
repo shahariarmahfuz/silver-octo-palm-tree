@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Add MCQ</h2>
+  <form method="post">
+    <label>Subject</label>
+    <select name="subject_id" required>
+      {% for subject in subjects %}
+        <option value="{{ subject.id }}">{{ subject.name }}</option>
+      {% endfor %}
+    </select>
+    <label>Question</label>
+    <textarea name="question" rows="3" required></textarea>
+    <label>Options (one per line)</label>
+    <textarea name="options" rows="5" required></textarea>
+    <label>Correct Index (0-based)</label>
+    <input type="number" name="correct_index" min="0" required />
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

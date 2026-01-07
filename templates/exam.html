@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Exam</h2>
+  <p>Time remaining: <span id="timer">{{ remaining_seconds }}</span> seconds</p>
+
+  <form method="post" id="exam-form">
+    {% for question in questions %}
+      <fieldset>
+        <legend>Question {{ loop.index }}</legend>
+        <p>{{ question.question }}</p>
+        {% for option in question.options %}
+          <label>
+            <input
+              type="radio"
+              name="question_{{ question.exam_question_id }}"
+              value="{{ loop.index0 }}"
+            />
+            {{ option }}
+          </label><br />
+        {% endfor %}
+      </fieldset>
+    {% endfor %}
+    <button type="submit">Submit Exam</button>
+  </form>
+
+  <script>
+    const timerEl = document.getElementById("timer");
+    const form = document.getElementById("exam-form");
+    let remaining = parseInt(timerEl.textContent, 10);
+
+    const interval = setInterval(() => {
+      remaining -= 1;
+      timerEl.textContent = remaining;
+      if (remaining <= 0) {
+        clearInterval(interval);
+        form.submit();
+      }
+    }, 1000);
+  </script>
+{% endblock %}
