@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Admin - Subjects</h2>
+
+  <form method="post">
+    <label>New Subject</label>
+    <input type="text" name="name" required />
+    <button type="submit">Add Subject</button>
+  </form>
+
+  <h3>Existing Subjects</h3>
+  <ul>
+    {% for subject in subjects %}
+      <li>
+        {{ subject.name }}
+        <a href="{{ url_for('edit_subject', subject_id=subject.id) }}">Rename</a>
+        <form method="post" action="{{ url_for('delete_subject', subject_id=subject.id) }}" style="display:inline;">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    {% else %}
+      <li>No subjects yet.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{{ url_for('admin_mcqs') }}">Manage MCQs</a>
+{% endblock %}

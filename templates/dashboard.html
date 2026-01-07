@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Welcome, {{ user.email }}</h2>
+
+  <section>
+    <h3>MCQ Availability</h3>
+    <p>Total MCQs: {{ total_mcqs }}</p>
+    <ul>
+      {% for subject in subjects %}
+        <li>{{ subject.name }}: {{ subject.mcq_count }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h3>Your Progress</h3>
+    <p>Attempted: {{ attempts.total_attempts }} / {{ total_mcqs }}</p>
+    <p>Correct: {{ attempts.correct_attempts }}</p>
+    <p>Accuracy: {{ accuracy }}%</p>
+  </section>
+
+  <section>
+    <h3>Recent Accuracy Trends (last 7 days)</h3>
+    <ul>
+      {% for trend in trends %}
+        <li>{{ trend.date }}: {{ trend.accuracy }}%</li>
+      {% else %}
+        <li>No attempts yet.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <a href="{{ url_for('exam_setup') }}">Start Exam</a>
+{% endblock %}

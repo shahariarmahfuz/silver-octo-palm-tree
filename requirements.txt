@@ -1,1 +1,3 @@
-
+flask
+libsql-client
+werkzeug

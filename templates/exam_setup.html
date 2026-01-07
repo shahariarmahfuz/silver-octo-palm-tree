@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Exam Setup</h2>
+  <form method="post">
+    <fieldset>
+      <legend>Subject Mode</legend>
+      <label><input type="radio" name="subject_mode" value="all" checked /> All subjects</label>
+      <label><input type="radio" name="subject_mode" value="single" /> Single subject</label>
+      <label><input type="radio" name="subject_mode" value="multiple" /> Multiple subjects</label>
+      <div>
+        <label>Single Subject</label>
+        <select name="single_subject">
+          {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <p>Select multiple subjects:</p>
+        {% for subject in subjects %}
+          <label>
+            <input type="checkbox" name="subjects" value="{{ subject.id }}" />
+            {{ subject.name }}
+          </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Exam Settings</legend>
+      <label>Number of MCQs (max 100)</label>
+      <input type="number" name="question_count" min="1" max="100" required />
+      <label>Time limit (minutes)</label>
+      <input type="number" name="time_limit" min="1" required />
+    </fieldset>
+
+    <fieldset>
+      <legend>Exam Mode</legend>
+      <label><input type="radio" name="mode" value="random" checked /> Random Mode</label>
+      <label><input type="radio" name="mode" value="progress" /> Progress Mode</label>
+    </fieldset>
+
+    <button type="submit">Start Exam</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Exam Result</h2>
+  <p>Total Questions: {{ summary.total }}</p>
+  <p>Correct: {{ summary.correct }}</p>
+  <p>Incorrect: {{ summary.incorrect }}</p>
+  <p>Score: {{ score }}%</p>
+  <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Upload MCQs via JSON</h2>
+  <p>JSON format:</p>
+  <pre>[
+  {"subject": "Math", "question": "2+2?", "options": ["3", "4"], "correct_index": 1}
+]</pre>
+  <form method="post">
+    <textarea name="mcq_json" rows="12" required></textarea>
+    <button type="submit">Upload</button>
+  </form>
+{% endblock %}

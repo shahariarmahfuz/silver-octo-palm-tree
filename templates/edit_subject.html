@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Edit Subject</h2>
+  <form method="post">
+    <label>Subject Name</label>
+    <input type="text" name="name" value="{{ subject.name }}" required />
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}
